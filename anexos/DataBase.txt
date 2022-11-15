@@ -1,0 +1,41 @@
+CREATE DATABASE pruebasatelite;
+GO;
+USE  pruebasatelite;
+GO;
+
+CREATE TABLE mat_materia(
+	mat_id INT IDENTITY(1,1) PRIMARY KEY,
+	mat_nombre VARCHAR(100),
+	created_at DATETIME,
+	updated_at DATETIME
+);
+GO;
+CREATE TABLE grd_grado(
+	grd_id INT IDENTITY(1,1) PRIMARY KEY,
+	grd_nombre VARCHAR(100),
+	created_at DATETIME,
+	updated_at DATETIME
+);
+GO;
+CREATE TABLE alm_alumno(
+	alm_id INT IDENTITY(1,1) PRIMARY KEY,
+	alm_codigo VARCHAR(100),
+	alm_nombre VARCHAR(300),
+	alm_edad INT,
+	alm_sexo VARCHAR(100),
+	alm_id_grd INT,
+	alm_observacion VARCHAR(300),
+	created_at DATETIME,
+	updated_at DATETIME,
+	CONSTRAINT fk_alm_alumno_grd_grado FOREIGN KEY (alm_id_grd) REFERENCES grd_grado (grd_id)
+);
+GO;
+CREATE TABLE mxg_materiaxgrado(
+	mxg_id INT IDENTITY(1,1) PRIMARY KEY,
+	mxg_id_grd INT,
+	mxg_id_mat INT,
+	created_at DATETIME,
+	updated_at DATETIME,
+	CONSTRAINT fk_mxg_materiaxgrado_grd_grado FOREIGN KEY (mxg_id_grd) REFERENCES grd_grado(grd_id),
+	CONSTRAINT fk_mxg_materiaxgrado_mat_materia FOREIGN KEY (mxg_id_mat) REFERENCES mat_materia(mat_id)
+);
